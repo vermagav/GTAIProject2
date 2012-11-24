@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Other Visual Studio generated files
+*.tlog
