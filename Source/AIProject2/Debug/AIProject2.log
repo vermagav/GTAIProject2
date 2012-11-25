@@ -1,15 +1,25 @@
-﻿Build started 25/11/2012 16:05:32.
-     1>Project "C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\AIProject2\AIProject2.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/25/2012 4:28:04 PM.
+     1>Project "C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\AIProject2\AIProject2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Applications\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt World.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GeneticAlgorithm.cpp main.cpp World.cpp
          World.cpp
-     1>c:\users\groovy\documents\github\gtaiproject2\source\aiproject2\world.cpp(17): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\ameya\documents\github\gtaiproject2\source\aiproject2\world.cpp(17): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         main.cpp
+     1>c:\users\ameya\documents\github\gtaiproject2\source\aiproject2\main.cpp(16): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\conio.h(131) : see declaration of 'getch'
+         GeneticAlgorithm.cpp
+     1>c:\users\ameya\documents\github\gtaiproject2\source\aiproject2\geneticalgorithm.cpp(43): warning C4244: '+=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\ameya\documents\github\gtaiproject2\source\aiproject2\geneticalgorithm.cpp(105): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\ameya\documents\github\gtaiproject2\source\aiproject2\geneticalgorithm.cpp(181): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         Generating Code...
        Link:
-         D:\Applications\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.lib" /MACHINE:X86 Debug\main.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.lib" /MACHINE:X86 Debug\GeneticAlgorithm.obj
+         Debug\main.obj
          Debug\World.obj
-         AIProject2.vcxproj -> C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.exe
-     1>Done Building Project "C:\Users\grOOvy\Documents\GitHub\GTAIProject2\Source\AIProject2\AIProject2.vcxproj" (Build target(s)).
+         LINK : C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.exe not found or not built by the last incremental link; performing full link
+         AIProject2.vcxproj -> C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\Debug\AIProject2.exe
+     1>Done Building Project "C:\Users\Ameya\Documents\GitHub\GTAIProject2\Source\AIProject2\AIProject2.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.75
+Time Elapsed 00:00:03.77

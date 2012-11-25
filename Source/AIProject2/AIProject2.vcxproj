@@ -77,12 +77,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="_config.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GeneticAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
