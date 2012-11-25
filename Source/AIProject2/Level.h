@@ -13,44 +13,18 @@ using std::cerr;
 class Level
 {
 private:
-	// Each entity in level is of the Point class
-	vector<Point> levelVector;
+	// Outer vector = Y, Inner vector = X
+	vector<vector<Point>> levelVector;
 
 public:
-	// Get access to level
-	vector<Point> getLevel() { return levelVector; }
-
+	// Add populated level
+	void setLevel(vector<vector<Point>> level) { levelVector = level; }
+	// Get access to full level
+	vector<vector<Point>> getLevel() { return levelVector; }
 	// Fetch point by x and y
-	Point getPoint(int x, int y)
-	{
-		// Method 1: Search
-		for(vector<Point>::size_type i = 0; i != levelVector.size(); i++)
-		{
-			if(levelVector[i].X() == x && levelVector[i].Y() == y)
-				return levelVector[i];
-		}
-		
-		// Method 2: Use min/max to fetch index directly (faster)
-		/*int returnIndex = (y * LEVEL_MAX_X) + x + 1;
-		return levelVector[returnIndex];*/
-	}
-	
-	// Add point to the level
-	void addPoint(Point p)
-	{
-		levelVector.push_back(p);
-	}
-
+	Point getPoint(int x, int y) { return levelVector[y][x]; }
 	// Modify existing point in the level
-	void modifyPoint(int x, int y, Point p)
-	{
-		// Search and set
-		for(vector<Point>::size_type i = 0; i != levelVector.size(); i++)
-		{
-			if(levelVector[i].X() == x && levelVector[i].Y() == y)
-				levelVector[i] = p;
-		}	
-	}
+	void modifyPoint(int x, int y, Point point) { levelVector[y][x] = point; }
 };
 
 #endif

@@ -32,19 +32,26 @@ void World::initWorld()
 	// Populate Level
 	// ----------------------
 	int pointCount = 0;
+	vector<vector<Point>> levelVector;
+	vector<Point> levelRow;
 
 	// Create empty level first
 	for(int y = LEVEL_MIN_Y; y <= LEVEL_MAX_Y; y++)
 	{
 		for(int x = LEVEL_MIN_X; x<= LEVEL_MAX_X; x++)
 		{
-			level.addPoint(Point(x, y, DIFF_TYPE_EMPTY, TYPE_EMPTY));
+			// Populate row for given y coordinate
+			levelRow.push_back(Point(x, y, DIFF_TYPE_EMPTY, TYPE_EMPTY));
 			pointCount++;
 		}
+		// Add row to 2D levelVector
+		levelVector.push_back(levelRow);
 	}
 
+	// Copy our now populated level vector to the main Level object
+	level.setLevel(levelVector);
+
 	//Add enemies
-	Point enemyPoint;
 	Point enemyApproachPoint;
 	for(vector<Enemy>::size_type i = 0; i != enemies.size(); i++)
 	{
@@ -52,29 +59,21 @@ void World::initWorld()
 		x = enemies[i].getPoint().X();
 		y = enemies[i].getPoint().Y();
 
-		// go to levelVector point of x and y
-		for(int j = 0; j < pointCount; j++)
+		// Change existing point in level object to enemy
+		level.modifyPoint(x, y, enemies[i].getPoint());
+
+		// set surrounding points to approaching enemy
+		for(int yArg = y-1; yArg <= y+1; yArg++)
 		{
-			// set point to enemy
-			if(level.getPoint(x, y).X() == x && level.getPoint(x, y).Y() == y)
+			for(int xArg = x-1; xArg <= x+1; xArg++)
 			{
-				enemyPoint = Point(x, y, DIFF_TYPE_ENEMY, TYPE_ENEMY);
-				level.modifyPoint(x, y, enemyPoint);
-			}
-			
-			// set surrounding points to approaching enemy
-			for(int yArg = y-1; yArg <= y+1; yArg++)
-			{
-				for(int xArg = x-1; xArg <= x+1; xArg++)
+				if(xArg <= LEVEL_MAX_X && xArg >= LEVEL_MIN_X && yArg <= LEVEL_MAX_Y && yArg >= LEVEL_MIN_Y)
 				{
-					if(xArg <= LEVEL_MAX_X && xArg >= LEVEL_MIN_X && yArg <= LEVEL_MAX_Y && yArg >= LEVEL_MIN_Y)
+					// set to everything except the enemy point itself
+					if(!(xArg == x && yArg == y))
 					{
-						// set to everything except the enemy point itself
-						if(!(xArg == x && yArg == y))
-						{
-							enemyApproachPoint = Point(x, y, DIFF_TYPE_APPROACH_ENEMY, TYPE_APPROACH_ENEMY);
-							level.modifyPoint(xArg, yArg, enemyApproachPoint);
-						}
+						enemyApproachPoint = Point(x, y, DIFF_TYPE_APPROACH_ENEMY, TYPE_APPROACH_ENEMY);
+						level.modifyPoint(xArg, yArg, enemyApproachPoint);
 					}
 				}
 			}
@@ -107,4 +106,3 @@ void World::drawWorld()
 		cout<<"\n";
 	}
 }
-
