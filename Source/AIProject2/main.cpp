@@ -3,12 +3,16 @@
  * 
  */
 #include "_config.h"
+#include "World.h"
 #include <iostream>
 #include <conio.h>
 
 int main()
 {
-	std::cout<<"Hello, World!";
+	World world;
+	world.initWorld();
+	world.drawWorld();
+
 	getch();
 	return 0;
 }

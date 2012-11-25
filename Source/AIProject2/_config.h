@@ -5,6 +5,26 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
+// Level Representation: Point Entity Types
+enum PointType
+{
+	TYPE_EMPTY,
+	TYPE_DOOR,
+	TYPE_OBSTACLE,
+	TYPE_APPROACH_ENEMY,
+	TYPE_ENEMY
+};
+
+// Level Representation: Point Difficulties
+const double DIFF_TYPE_EMPTY = 0.0;
+const double DIFF_TYPE_DOOR = 0.0;
+const double DIFF_TYPE_OBSTACLE = 0.4;
+const double DIFF_TYPE_APPROACH_ENEMY = 0.8;
+const double DIFF_TYPE_ENEMY = 1.0;
+
+// Level Representation: Enemy Population Buffer (from border of level)
+const int ENEMY_GENERATION_BUFFER = 10;
+
 // World's Game State
 enum GameState
 {
