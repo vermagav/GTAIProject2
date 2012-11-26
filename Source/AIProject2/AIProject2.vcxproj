@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Chromosome.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="Level.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="_config.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Chromososme.cpp" />
     <ClCompile Include="GeneticAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="World.cpp" />

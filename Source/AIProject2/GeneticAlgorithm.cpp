@@ -40,7 +40,7 @@ int getIntegerForm(vector<int> binary)
 	int result = 0;
 	
 	for(size_t i = 0; i != binary.size(); i++)
-		result += (binary[i] * pow(2, i));
+		result += (binary[i] * (int)pow(2, i));
 
 	return result;
 }
@@ -152,6 +152,34 @@ void Chromosome::decode()
 	}
 }
 
+bool Chromosome::isOutOfBounds()
+{
+	
+	// Make sure encode is called before calling this
+	if(monotone)
+	{
+		for(vector<pair<int, int> >::const_iterator i = path.begin(); i != path.end(); i++)
+		{
+			//if((*i).first == 0)
+			// TODO
+
+		}
+	}
+	else
+		{
+			// TODO
+		}
+	
+	return true;
+}
+
+double Chromosome::function1()
+{
+	// TODO
+	return true;
+}
+
+
 void Chromosome::repair()
 {
 	// Repair paths that have a Solid Obstacle: Don't Know How To
@@ -165,7 +193,8 @@ bool Chromosome::isValid() const
 	return true;
 }
 
-void GeneticAlgorithm::generatePopulation(int size, int rows , int columns)
+
+void GeneticAlgorithm::generatePopulation(int size, int rows , int columns, World* world)
 {
 	srand((unsigned)time(0));	
 
@@ -174,7 +203,7 @@ void GeneticAlgorithm::generatePopulation(int size, int rows , int columns)
 
 	for(int i = 0; i != size - 2; i++)
 	{
-		Chromosome temp(rows, columns);
+		Chromosome temp(rows, columns, world);
 		
 		//Set Monotone
 		random_num1 = rand()%2;
@@ -210,7 +239,7 @@ void GeneticAlgorithm::generatePopulation(int size, int rows , int columns)
 	}
 
 	//Add X - Monotone Path to Population
-	Chromosome Xmono(rows, columns);
+	Chromosome Xmono(rows, columns, world);
 	Xmono.setMonotone(false);
 	
 	// Set the X-monotone path
@@ -233,7 +262,7 @@ void GeneticAlgorithm::generatePopulation(int size, int rows , int columns)
 	population.push_back(Xmono);
 
 	//Add Y - Mootone path to Population
-	Chromosome Ymono(rows, columns);
+	Chromosome Ymono(rows, columns, world);
 	Ymono.setMonotone(true);
 
 	//Set the Y - Monotone Path

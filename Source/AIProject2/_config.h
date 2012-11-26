@@ -53,7 +53,7 @@ const int LEVEL_MIN_Y = 0;
 const int LEVEL_MAX_Y = 70;
 
 // Number of enemies
-const int NUM_ENEMIES = 25;
+const int NUM_ENEMIES = 20;
 
 // Number of moves per second
 const int NUM_MOVES_PER_SEC = 1;

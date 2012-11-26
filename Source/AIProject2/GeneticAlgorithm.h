@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include "World.h"
 
 //Global Constants:
 // Number of decision variables
@@ -57,10 +58,13 @@ private:
 
 	// binary representation as a string
 	std::vector<int> binary_rep;
+	
+	// Pointer to the World Object to get Level
+	World *world;  
 
 public:
 	// parametrized Constructor
-	Chromosome(size_t rows, size_t columns): pathLength(rows + columns - 1), binary_length((int)log2(rows + columns))
+	Chromosome(size_t rows, size_t columns, World* w): pathLength(rows + columns - 1), binary_length((int)log2(rows + columns)), world(w)
 	{
 		// Set the Total Length of the Path in Construcutor List
 		// Set the Length of Binary format of Distance associated with the Direction in Constructor List
@@ -102,7 +106,8 @@ public:
 	// Used to repair Invalid Paths
 	void repair();
 	bool isValid() const;
-	
+	bool isOutOfBounds();
+
 	// The two objective functions ot be maximized
 	double function1();
 	double function2();
@@ -114,6 +119,7 @@ public:
 		function_value[1]=function2();
 
 		//More Multi-Objective Shit
+
 	}
 };
 
@@ -121,7 +127,7 @@ class GeneticAlgorithm
 {
 public:
 	// Generate a random Initial Population
-	void generatePopulation(int size, int rows, int colums);
+	void generatePopulation(int size, int rows, int colums, World *world);
 
 	// Repair Invalid Paths in the Population
 	void repairPopulation();

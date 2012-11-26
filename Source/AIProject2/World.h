@@ -19,7 +19,7 @@ private:
 public:
 	void initWorld();
 	void drawWorld();
-
+	Level getLevel() const { return level; }
 };
 
 #endif
