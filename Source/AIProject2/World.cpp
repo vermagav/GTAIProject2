@@ -13,14 +13,20 @@ void World::initWorld()
 	// ----------------------
 	// Initialize Enemies
 	// ----------------------
+	// Initialize variables for readability later
 	int x = 0, y = 0;
+	int maxX = LEVEL_MAX_X - ENEMY_GENERATION_BUFFER;
+	int minX = LEVEL_MIN_X + ENEMY_GENERATION_BUFFER;
+	int maxY = LEVEL_MAX_Y - ENEMY_GENERATION_BUFFER;
+	int minY = LEVEL_MIN_Y + ENEMY_GENERATION_BUFFER;
+	
 	srand(time(0));
 
 	for(vector<Enemy>::size_type i = 0; i != NUM_ENEMIES; i++)
 	{
 		// Generate random numbers for x, y
-		x = ENEMY_GENERATION_BUFFER + rand() % (LEVEL_MAX_X - ENEMY_GENERATION_BUFFER);
-		y = ENEMY_GENERATION_BUFFER + rand() % (LEVEL_MAX_Y - ENEMY_GENERATION_BUFFER);
+		x = rand() % (maxX - minX) + minX;
+		y = rand() % (maxY - minY) + minY;
 
 		// TODO: Make sure x, y are within walls and not on top of another enemy
 
@@ -51,8 +57,7 @@ void World::initWorld()
 	// Copy our now populated level vector to the main Level object
 	level.setLevel(levelVector);
 
-	//Add enemies
-	Point enemyApproachPoint;
+	// Add enemies
 	for(vector<Enemy>::size_type i = 0; i != enemies.size(); i++)
 	{
 		// get enemy x and y
@@ -60,7 +65,8 @@ void World::initWorld()
 		y = enemies[i].getPoint().Y();
 
 		// Change existing point in level object to enemy
-		level.modifyPoint(x, y, enemies[i].getPoint());
+		level.setTypeToEnemy(x, y);
+			// Alt method: level.modifyPoint(x, y, enemies[i].getPoint());
 
 		// set surrounding points to approaching enemy
 		for(int yArg = y-1; yArg <= y+1; yArg++)
@@ -72,17 +78,19 @@ void World::initWorld()
 					// set to everything except the enemy point itself
 					if(!(xArg == x && yArg == y))
 					{
-						enemyApproachPoint = Point(x, y, DIFF_TYPE_APPROACH_ENEMY, TYPE_APPROACH_ENEMY);
-						level.modifyPoint(xArg, yArg, enemyApproachPoint);
+						level.setTypeToApproachEnemy(xArg, yArg);
 					}
 				}
 			}
 		}
 	}
 
+	// Add goal node
+	level.setTypeToGoal(LEVEL_MAX_X - 2, LEVEL_MAX_Y - 2);
+
 	// TODO: Add rooms
-	//		-- Add walls
-	//		-- Add door
+	//		-- Add walls (TYPE_OBSTACLE)
+	//		-- Add door (TYPE_DOOR)
 }
 
 /* Function for drawing the contents of the world */
@@ -102,6 +110,8 @@ void World::drawWorld()
 				cout<<"X";
 			if(level.getPoint(x, y).getType() == TYPE_APPROACH_ENEMY)
 				cout<<"~";
+			if(level.getPoint(x, y).getType() == TYPE_GOAL)
+				cout<<"G";
 		}
 		cout<<"\n";
 	}

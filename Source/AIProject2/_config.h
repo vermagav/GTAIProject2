@@ -12,7 +12,8 @@ enum PointType
 	TYPE_DOOR,
 	TYPE_OBSTACLE,
 	TYPE_APPROACH_ENEMY,
-	TYPE_ENEMY
+	TYPE_ENEMY,
+	TYPE_GOAL
 };
 
 // Level Representation: Point Difficulties
@@ -21,6 +22,7 @@ const double DIFF_TYPE_DOOR = 0.0;
 const double DIFF_TYPE_OBSTACLE = 0.4;
 const double DIFF_TYPE_APPROACH_ENEMY = 0.8;
 const double DIFF_TYPE_ENEMY = 1.0;
+const double DIFF_TYPE_GOAL = 0.0;
 
 // Level Representation: Enemy Population Buffer (from border of level)
 const int ENEMY_GENERATION_BUFFER = 10;
@@ -48,7 +50,7 @@ const int STARTY_GOAL = 48;
 const int LEVEL_MIN_X = 0;
 const int LEVEL_MAX_X = 140;
 const int LEVEL_MIN_Y = 0;
-const int LEVEL_MAX_Y = 50;
+const int LEVEL_MAX_Y = 70;
 
 // Number of enemies
 const int NUM_ENEMIES = 25;

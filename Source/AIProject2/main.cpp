@@ -9,10 +9,18 @@
 
 int main()
 {
-	World world;
-	world.initWorld();
-	world.drawWorld();
+	World* world;
+	char key = '\0';
 
-	getch();
+	while(key != 'q')
+	{
+		world = new World();
+		world->initWorld();
+		world->drawWorld();
+		std::cout<<"\n\n\n\t[Q]uit";
+		key = getch();
+	}
+
+	delete world;
 	return 0;
 }
