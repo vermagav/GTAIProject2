@@ -16,7 +16,7 @@ using std::endl;
 // Utility Function: get vector of binary form from the Number
 vector<int> getBinaryForm(int number, int vector_size)
 {
-	cout<<number<<" kkk";
+	cout<<number<<"\n";
 
 	vector<int> result;
 	int remainder = 0, count = 0;
@@ -32,11 +32,15 @@ vector<int> getBinaryForm(int number, int vector_size)
 		cout<<number;
     }
 	
-	cout<<"count "<<count<<count<<" size "<<vector_size;
+	cout<<"count "<<count<<count<<"\nsize "<<vector_size;
 	
 	// Fill in the remaining Zeros
-	while(count != vector_size - 1)
+	// Check -1???
+	while(count != vector_size)
+	{
 		result.push_back(0);
+		count++;
+	}
 
 	//reverse the vector
 	reverse(result.begin(), result.end());
@@ -168,6 +172,8 @@ void Chromosome::encode()
 			binary_rep.push_back(0);
 
 		cout<<"PUSHED PATH CODE BUT NOT DISTANCE";
+
+		cout<<"Length of Binary path"<< binary_length;
 
 		vector<int> distance = getBinaryForm(int_dist, binary_length);
 

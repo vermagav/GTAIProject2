@@ -130,6 +130,11 @@ public:
 		return (function_value[0] + function_value[1]);
 	}
 
+	int getbinaryLength() const
+	{
+		return binary_length;
+	}
+
 	// Converting from binary_rep to montone/Path and vice-versa
 	void encode();
 	void decode();

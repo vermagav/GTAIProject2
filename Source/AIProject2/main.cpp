@@ -8,11 +8,17 @@
 #include <iostream>
 #include <conio.h>
 
+using namespace std;
+
 int main()
 {
 	World* world;
 	world = new World();
 	world->initWorld();
+	
+
+	cout<<"LOG of 16"<<log2(16);
+	
 	//world->drawWorld();
 
 	GeneticAlgorithm genetic(POPULATION_SIZE, LEVEL_NUM_ROWS, LEVEL_NUM_COLUMNS, world);

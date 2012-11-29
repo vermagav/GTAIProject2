@@ -36,6 +36,8 @@ void GeneticAlgorithm::generatePopulation()
 		// Create Vector to Hold path
 		vector<pair<int, int> > temp_path;
 
+		cout<<" PathLength ="<< temp.getPathLength()<<" Binary Length"<< temp.getbinaryLength();
+
 		for (int j = 0; j != temp.getPathLength(); j++)
 		{
 			cout<<j<< " ";

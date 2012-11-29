@@ -43,7 +43,6 @@ private:
 	World *world;
 	int populationSize;
 	int rows, columns;
-
 };
 
 #endif

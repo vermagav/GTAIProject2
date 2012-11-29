@@ -48,9 +48,9 @@ const int STARTY_GOAL = 50;
 
 // Boundary constants for the level
 const int LEVEL_MIN_X = 0;
-const int LEVEL_MAX_X = 50;
+const int LEVEL_MAX_X = 15;
 const int LEVEL_MIN_Y = 0;
-const int LEVEL_MAX_Y = 50;
+const int LEVEL_MAX_Y = 15;
 
 // Maximum number of rows (depends on Y) and columns (depends on X)
 const int LEVEL_NUM_ROWS = (LEVEL_MAX_Y - LEVEL_MIN_Y) + 1;
