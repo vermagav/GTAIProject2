@@ -52,6 +52,10 @@ const int LEVEL_MAX_X = 140;
 const int LEVEL_MIN_Y = 0;
 const int LEVEL_MAX_Y = 70;
 
+// Maximum number of rows (depends on Y) and columns (depends on X)
+const int LEVEL_NUM_ROWS = (LEVEL_MAX_Y - LEVEL_MIN_Y) + 1;
+const int LEVEL_NUM_COLUMNS = (LEVEL_MAX_X - LEVEL_MIN_X) + 1;
+
 // Number of enemies
 const int NUM_ENEMIES = 20;
 
