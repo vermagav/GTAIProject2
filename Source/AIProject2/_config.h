@@ -43,21 +43,21 @@ const int STEP_SIZE_ADVERSARY = 1;
 // Start position of home agent
 const int STARTX_HOMEAGENT = 0;
 const int STARTY_HOMEAGENT = 0;
-const int STARTX_GOAL = 140;
-const int STARTY_GOAL = 48;
+const int STARTX_GOAL = 50;
+const int STARTY_GOAL = 50;
 
 // Boundary constants for the level
 const int LEVEL_MIN_X = 0;
-const int LEVEL_MAX_X = 140;
+const int LEVEL_MAX_X = 50;
 const int LEVEL_MIN_Y = 0;
-const int LEVEL_MAX_Y = 70;
+const int LEVEL_MAX_Y = 50;
 
 // Maximum number of rows (depends on Y) and columns (depends on X)
 const int LEVEL_NUM_ROWS = (LEVEL_MAX_Y - LEVEL_MIN_Y) + 1;
 const int LEVEL_NUM_COLUMNS = (LEVEL_MAX_X - LEVEL_MIN_X) + 1;
 
 // Number of enemies
-const int NUM_ENEMIES = 20;
+const int NUM_ENEMIES = 5;
 
 // Number of moves per second
 const int NUM_MOVES_PER_SEC = 1;

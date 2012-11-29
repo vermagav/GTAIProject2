@@ -23,9 +23,9 @@ const int MAX_ARCHIVE_SIZE = 1000;
 const double CROSSOVER_RATE = 0.5;
 const double MUTATION_RATE = 0.08;
 const double HYPERMUTATION_RATE = 0.20;
-const int POPULATION_SIZE = 100;
-const int ELITE_NO = 10;
-
+const int POPULATION_SIZE = 50;
+const int ELITE_NO = 5;
+const int NUM_OF_ITERATIONS = 500;
 // TODO: Needs to be changed
 const double FITNESS_THRESHOLD = 50;
 
@@ -49,7 +49,7 @@ private:
 	int pathLength;
 	int binary_length;
 	
-	double fitnessValue;
+	int rank;
 
 	// Cache the values of the objective functions
 	double function_value[NO_OBJECTIVE_FUNCTIONS];
@@ -110,9 +110,24 @@ public:
 		return pathLength;
 	}
 
-	inline double getFitness() const
+	inline int getRank() const
 	{
-		return fitnessValue;
+		return rank;
+	}
+
+	void setRank(int r)
+	{
+		rank = r;
+	}
+
+	double* getFunctionValue()
+	{
+		return function_value;
+	}
+
+	double getFitness()
+	{
+		return (function_value[0] + function_value[1]);
 	}
 
 	// Converting from binary_rep to montone/Path and vice-versa
@@ -142,9 +157,6 @@ public:
 	{
 		function1();
 		function2();
-
-		//More Multi-Objective Shit
-		// Dominate figure out how
 	}
 };
 

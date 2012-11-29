@@ -16,6 +16,8 @@ using std::endl;
 // Utility Function: get vector of binary form from the Number
 vector<int> getBinaryForm(int number, int vector_size)
 {
+	cout<<number<<" kkk";
+
 	vector<int> result;
 	int remainder = 0, count = 0;
 
@@ -26,7 +28,11 @@ vector<int> getBinaryForm(int number, int vector_size)
 		number = number / 2;
 		result.push_back(remainder);
 		count++;
+
+		cout<<number;
     }
+	
+	cout<<"count "<<count<<count<<" size "<<vector_size;
 	
 	// Fill in the remaining Zeros
 	while(count != vector_size - 1)
@@ -53,8 +59,8 @@ int getIntegerForm(vector<int> binary)
 
 bool compare(Chromosome a, Chromosome b)
 {
-	// Compare Fitness using some Mulit- Object oriented Shit
-	return true;
+	// Compare Fitness for sorting into decreasing order for fitness evaluations
+	return a.getRank() > b.getRank();
 }
 
 // Crossover and Mutate Functions
@@ -87,15 +93,15 @@ Chromosome crossover(const Chromosome &a, const Chromosome &b)
 // Single Bit Binary Mutation
 void mutate(Chromosome &a)
 {
-	int randomNo = 0;
 	
-	// Mutate or Not Mutate
+	
+	// Decide to Mutate or Not Mutate
 	if( (rand() % 100) > MUTATION_RATE)
 	{
-		
+		// Get the Binary Representation and Mutate at a Random Index 
 		vector<int> binaryRep = a.getBinaryRep();
 
-		randomNo = rand() % binaryRep.size();
+		int randomNo = rand() % binaryRep.size();
 
 		if(binaryRep[randomNo] == 0)
 			binaryRep[randomNo] = 1;
@@ -106,7 +112,6 @@ void mutate(Chromosome &a)
 	}
 }
 
-
 //_______________________________________________________________________________________________________________
 void Chromosome::encode()
 {
@@ -116,9 +121,14 @@ void Chromosome::encode()
 	// Set whether X or Y monotone
 	binary_rep.push_back((int)monotone);
 
+	cout<<"MONOTONE SET";
+	cout<<"monotne"<< monotone;
+	cout<<"path:"<<path.size();
+
 	//Set the Path
 	for(vector<pair<int, int> >::const_iterator i = path.begin(); i != path.end(); i++)
 	{
+
 		if((*i).first == 0)
 		{
 			binary_rep.push_back(0);
@@ -146,6 +156,9 @@ void Chromosome::encode()
 		// Convert the distance to binary form;
 		// Binary Form hs to be Proper Length
 		int int_dist = (*i).second;
+		
+		cout<<"distance = "<<int_dist;
+
 		if( int_dist < 0)
 		{
 			binary_rep.push_back(1);
@@ -154,11 +167,17 @@ void Chromosome::encode()
 		else
 			binary_rep.push_back(0);
 
+		cout<<"PUSHED PATH CODE BUT NOT DISTANCE";
+
 		vector<int> distance = getBinaryForm(int_dist, binary_length);
+
+		cout<<"done distance";
 
 		// Make Sure Length of distance vector is binary_length 
 		//Append that to the end of the binary_rep
 		copy(distance.begin(), distance.end(), back_inserter(binary_rep));
+		
+		cout<<"1 path-code done";
 	}
 }
 

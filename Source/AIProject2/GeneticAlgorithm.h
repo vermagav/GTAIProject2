@@ -9,10 +9,14 @@ class GeneticAlgorithm
 {
 public:
 	// Constructor
-	GeneticAlgorithm(int size, int r, int c):crossoverRate(CROSSOVER_RATE), mutationRate(MUTATION_RATE), populationSize(size), rows(r), columns(c)
+	GeneticAlgorithm(int size, int r, int c, World *w):crossoverRate(CROSSOVER_RATE), mutationRate(MUTATION_RATE), populationSize(size), world(w), rows(r), columns(c)
 	{
-		// Where to call generate
+		std::cout<<"IN CONSTRUCTOR \n";
 
+		// Where to call generate ??
+		generatePopulation();
+		//repairPopulation();
+		//evaluatePopulationFitness();
 	}
 
 	// Generate a random Initial Population
@@ -25,11 +29,12 @@ public:
 	void evaluatePopulationFitness();
 	std::vector<Chromosome> rouletteSelection();
 	std::vector<Chromosome> generateOffSpring();
-	void run(int size, int rows , int columns, World* world);
+	void run();
 
 	void displayPopulation() const;
 	void calculateAverageFitness();
-
+	bool strictDomCheck(int a, int b);
+	
 private:
 	std::vector<Chromosome> population;
 	double crossoverRate;
@@ -38,6 +43,7 @@ private:
 	World *world;
 	int populationSize;
 	int rows, columns;
+
 };
 
 #endif

@@ -12,10 +12,13 @@ using std::reverse;
 using std::cout;
 using std::endl;
 
+// TODO GENERATE PATHS
 void GeneticAlgorithm::generatePopulation()
 {
 	// TODO:: Generate Valid Path
 	srand((unsigned)time(0));	
+
+	cout<<" INSIDE GENERATE";
 
 	// First Create N - 2 Random Paths
 	int random_num1 = 0, random_num2 = 0;
@@ -26,7 +29,7 @@ void GeneticAlgorithm::generatePopulation()
 		Chromosome temp(rows, columns, world);
 		
 		//Set Monotone
-		random_num1 = rand()%2;
+		random_num1 = rand() % 2;
 		temp.setMonotone((bool)random_num1);
 		
 		// Set path
@@ -35,6 +38,8 @@ void GeneticAlgorithm::generatePopulation()
 
 		for (int j = 0; j != temp.getPathLength(); j++)
 		{
+			cout<<j<< " ";
+
 			// Create random no for direction 00, 01, 10, 11
 			random_num1 = rand()% 4;
 
@@ -51,11 +56,16 @@ void GeneticAlgorithm::generatePopulation()
 		// Actually set the path
 		temp.setPath(temp_path);
 		
+		cout<<"PATH SET";
 		// create the binary Representation
 		temp.encode();
+		
+		cout<<" DONE ENCODING";
 
 		// Add the Randomly Generated Chromosome To the Population
 		population.push_back(temp);
+		
+		cout<<"Generated individual"<<i<<"\n";
 	}
 
 	//Add X - Monotone Path to Population
@@ -105,11 +115,11 @@ void GeneticAlgorithm::generatePopulation()
 	population.push_back(Ymono);
 }
 
-
+// Repair Invalid Chromosomes
 void GeneticAlgorithm::repairPopulation()
 {
 	vector<Chromosome> valid, invalid;
-	// Repair Invalid Chromosomes
+	
 	for(vector<Chromosome>::iterator i = population.begin(); i != population.end(); i++)
 		if((*i).isOutOfBounds())
 		{
@@ -143,21 +153,37 @@ void GeneticAlgorithm::displayPopulation() const
 
 void GeneticAlgorithm::evaluatePopulationFitness()
 {
+	int d = 0;
 	for(vector<Chromosome>::iterator i = population.begin(); i != population.end(); i++)
-	{
 		(*i).calculateFitness();
+	
+	for(vector<Chromosome>::size_type i = 0; i < population.size(); i++)
+	{
+		// Set num of dominating solutions to Zero
+		d = 0;
+
+		// Find the number of dominating solutions
+		for (vector<Chromosome>::size_type j = 0; j != population.size(); j++)
+		{
+			// Check j,i
+			if(strictDomCheck(j, i))
+				d++;
+		}
+
+		population[i].setRank((populationSize - d));
 	}
 
-	// Sort the population according to the fitness evaluation
+	// Sort the population according to the Pareto Optimality Ranking
 	sort(population.begin(), population.end(), compare);
 }
 
+// NOT USED, use Best Individual for Hyper Mutation
 void GeneticAlgorithm::calculateAverageFitness()
 {
 	double sum = 0.0;
 
 	for(vector<Chromosome>::const_iterator i = population.begin(); i != population.end(); i++)
-		sum += (*i).getFitness();
+		sum += (*i).getRank();
 
 	sum /=population.size();
 
@@ -179,12 +205,12 @@ std::vector<Chromosome> GeneticAlgorithm::rouletteSelection()
 	
 	// Calculate the sum
 	for(vector<Chromosome>::const_iterator i = population.begin(); i != population.end(); i++)
-		fitnesssum += (*i).getFitness();
+		fitnesssum += (*i).getRank();
 
 	// Get the roulette probability 
 	for(vector<Chromosome>::const_iterator i = population.begin(); i != population.end(); i++)
 	{
-		probability = probabilitysum + ((*i).getFitness()/fitnesssum);
+		probability = probabilitysum + ((*i).getRank()/fitnesssum);
 		probabilitysum += probability;
 		probOfSelection.push_back(make_pair((*i), probabilitysum));
 	}
@@ -227,12 +253,12 @@ std::vector<Chromosome> GeneticAlgorithm::generateOffSpring()
 	
 	// Calculate the sum
 	for(vector<Chromosome>::const_iterator i = population.begin(); i != population.end(); i++)
-		fitnesssum += (*i).getFitness();
+		fitnesssum += (*i).getRank();
 
 	// Get the roulette probability 
 	for(vector<Chromosome>::const_iterator i = population.begin(); i != population.end(); i++)
 	{
-		probability = probabilitysum + ((*i).getFitness()/fitnesssum);
+		probability = probabilitysum + ((*i).getRank()/fitnesssum);
 		probabilitysum += probability;
 		probOfSelection.push_back(make_pair((*i), probability));
 	}
@@ -242,7 +268,7 @@ std::vector<Chromosome> GeneticAlgorithm::generateOffSpring()
 	double r2 = 0;
 	int count = 0;
 
-	while (count != (POPULATION_SIZE *(1 - CROSSOVER_RATE) - 2 * ELITE_NO))
+	while (count != (POPULATION_SIZE *(1 - CROSSOVER_RATE) - ELITE_NO))
 	{
 		// Generate a random number between 0 and 1 
 		r1 = ((double) rand() / (RAND_MAX));
@@ -280,7 +306,7 @@ std::vector<Chromosome> GeneticAlgorithm::generateOffSpring()
 	return offsprings;
 }
 
-void GeneticAlgorithm::run(int size, int rows , int columns, World* world)
+void GeneticAlgorithm::run()
 {
 	// Generate the initial Population
 	generatePopulation();
@@ -296,45 +322,85 @@ void GeneticAlgorithm::run(int size, int rows , int columns, World* world)
 	// Should go in a loop
 
 	// Get the Best ELITE_NO of Chromosomes
-	vector<Chromosome> bestChromosomes(population.begin(), population.begin() + ELITE_NO);
-	
-	// Generate Elite Number of Chromsomes form the elite population
-	vector<Chromosome> newEliteGeneration;
-	for(int i =0; i != ELITE_NO; i++)
+	int count = NUM_OF_ITERATIONS;
+	while(count != NUM_OF_ITERATIONS) // || population[0] > DESIRED_FITNESS
 	{
-		// Select two random Chromsomes from bestChromosomes and Mate them and Mutate them
-		Chromosome temp = crossover(population[rand() % bestChromosomes.size()], population[rand() % bestChromosomes.size()]);
-		mutate(temp);
-
-		// Add to new generation
-		newEliteGeneration.push_back(temp);
-	}
-
-	// Use Roulette Selcetion to select MUTATION_RATE*POPULATION_SIZE
-	vector<Chromosome> rouletteChromosomes = rouletteSelection();
+		vector<Chromosome> bestChromosomes(population.begin(), population.begin() + ELITE_NO);
 	
-	// Remove worst ELITE_NO chromsomes
-	int offset = population.size() - ELITE_NO;
-	population.erase(population.begin() + offset, population.end());
+		// Generate Elite Number of Chromsomes form the elite population
+		/*
+		vector<Chromosome> newEliteGeneration;
+		for(int i =0; i != ELITE_NO; i++)
+		{
+			// Select two random Chromsomes from bestChromosomes and Mate them and Mutate them
+			Chromosome temp = crossover(population[rand() % bestChromosomes.size()], population[rand() % bestChromosomes.size()]);
+			mutate(temp);
 
-	// Remove ELITE_NO Best Chromosmes
-	population.erase(population.begin(), population.begin() + ELITE_NO);
+			// Add to new generation
+			newEliteGeneration.push_back(temp);
+		}
+		*/
+
+		// Use Roulette Selection to select MUTATION_RATE*POPULATION_SIZE
+		vector<Chromosome> rouletteChromosomes = rouletteSelection();
+	
+		// Remove worst ELITE_NO chromsomes
+		int offset = population.size() - ELITE_NO;
+		population.erase(population.begin() + offset, population.end());
+
+		// Remove ELITE_NO Best Chromosmes
+		//population.erase(population.begin(), population.begin() + ELITE_NO);
 		
-	vector<Chromosome> offsprings = generateOffSpring();
+		vector<Chromosome> offsprings = generateOffSpring();
 	
-	// NEW POPULATION
-	population.clear();
-	copy(bestChromosomes.begin(), bestChromosomes.end(), back_inserter(population));
-	copy(newEliteGeneration.begin(), newEliteGeneration.end(), back_inserter(population));
-	copy(rouletteChromosomes.begin(), rouletteChromosomes.end(), back_inserter(population));
-	// Try to Repair the Invalid paths
-	repairPopulation();
+		// NEW POPULATION
+		population.clear();
+		copy(bestChromosomes.begin(), bestChromosomes.end(), back_inserter(population));
+		//copy(newEliteGeneration.begin(), newEliteGeneration.end(), back_inserter(population));
+		copy(rouletteChromosomes.begin(), rouletteChromosomes.end(), back_inserter(population));
+		copy(offsprings.begin(), offsprings.end(), back_inserter(population));
+	
+		double randomNum = 0.0;
 
-	// Calculate the fitness of each chromosome in the population and sort
-	evaluatePopulationFitness();
+		// Mutate the New Population at the Mutation Rate
+		for(vector<Chromosome>::iterator i = population.begin(); i != population.end(); i++)
+		{
+			randomNum = ((double) rand() / (RAND_MAX));
+			if(randomNum < mutationRate)
+				mutate((*i));
+		}
 
-	// HYPERMUTATION CHECK
-	if(population[0].getFitness() < FITNESS_THRESHOLD)
-		mutationRate = HYPERMUTATION_RATE;
-		// reduce mutation rate
+		// Try to Repair the Invalid paths
+		repairPopulation();
+
+		// Calculate the fitness of each chromosome in the population and sort
+		evaluatePopulationFitness();
+
+		// HYPERMUTATION CHECK, WHEN SOLUTION DOE NOT CONVERGE
+		if(count > 50)
+		{
+			if(population[0].getFitness() < FITNESS_THRESHOLD)
+				mutationRate = HYPERMUTATION_RATE;
+			if(population[0].getFitness() > FITNESS_THRESHOLD)
+				mutationRate = MUTATION_RATE;
+		}
+	}
+}
+
+bool GeneticAlgorithm::strictDomCheck(int a, int b)
+{
+	bool isDominated = true;
+	 
+	for (int i = 0; i < NO_OBJECTIVE_FUNCTIONS; i++)
+	{
+		if ((isDominated == true) && (population[a].getFunctionValue()[i] < population[b].getFunctionValue()[i]))
+			isDominated = true;
+		else
+		{
+			isDominated = false;
+			break;
+		}
+	}
+	
+	return (isDominated);
 }
