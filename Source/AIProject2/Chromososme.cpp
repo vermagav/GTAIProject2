@@ -16,7 +16,7 @@ using std::endl;
 // Utility Function: get vector of binary form from the Number
 vector<int> getBinaryForm(int number, int vector_size)
 {
-	cout<<number<<"\n";
+	cout<<"\n Number given to func ="<<number<<"\n";
 
 	vector<int> result;
 	int remainder = 0, count = 0;
@@ -28,11 +28,10 @@ vector<int> getBinaryForm(int number, int vector_size)
 		number = number / 2;
 		result.push_back(remainder);
 		count++;
-
 		cout<<number;
     }
 	
-	cout<<"count "<<count<<count<<"\nsize "<<vector_size;
+	cout<<" \ncount "<<count<<count<<"\nsize "<<vector_size;
 	
 	// Fill in the remaining Zeros
 	// Check -1???

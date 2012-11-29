@@ -169,5 +169,7 @@ public:
 bool compare(Chromosome a, Chromosome b);
 Chromosome crossover(const Chromosome &a, const Chromosome &b);
 void mutate(Chromosome &a);
+std::vector<int> getBinaryForm(int number, int vector_size);
+int getIntegerForm(vector<int> binary);
 
 #endif

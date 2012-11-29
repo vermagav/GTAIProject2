@@ -19,8 +19,20 @@ int main()
 
 	cout<<"LOG of 16"<<log2(16);
 	
-	//world->drawWorld();
+	vector<int> bin_num = getBinaryForm(9, log2(16));
 
+	for(vector<int>::size_type i = 0; i != bin_num.size(); i++)
+		cout<<bin_num[i];
+	cout<<endl;
+	
+	int number = getIntegerForm(bin_num);
+
+	cout<<number;
+
+	getch();
+
+	//world->drawWorld();
+	/*
 	GeneticAlgorithm genetic(POPULATION_SIZE, LEVEL_NUM_ROWS, LEVEL_NUM_COLUMNS, world);
 	
 	genetic.displayPopulation();
