@@ -50,5 +50,8 @@
     <ClCompile Include="Chromososme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -86,7 +86,7 @@ void World::initWorld()
 	}
 
 	// Add goal node
-	level.setTypeToGoal(LEVEL_MAX_X - 2, LEVEL_MAX_Y - 2);
+	level.setTypeToGoal(LEVEL_MAX_X, LEVEL_MAX_Y);
 
 	// TODO: Add rooms
 	//		-- Add walls (TYPE_OBSTACLE)
@@ -97,7 +97,7 @@ void World::initWorld()
 void World::drawWorld()
 {
 	// Clear the screen
-	system("CLS");
+	//system("CLS");
 
 	// Go through Level and write to console
 	for(int y = LEVEL_MIN_Y; y <= LEVEL_MAX_Y; y++)

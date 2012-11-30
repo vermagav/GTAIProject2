@@ -5,53 +5,45 @@
 #include "_config.h"
 #include "World.h"
 #include "GeneticAlgorithm.h"
-#include <iostream>
 #include <conio.h>
 
 using namespace std;
 
 int main()
 {
+	// Initialize world object
 	World* world;
 	world = new World();
+
+	// Initialize level representation
 	world->initWorld();
-	
 
-	cout<<"LOG of 16"<<log2(16);
-	
-	vector<int> bin_num = getBinaryForm(9, log2(16));
+	cout<<"\nWorld initiated...";
+	cout<<"\nLevel procedurally generated...";
+	cout<<"\nTextual representation of level:";
 
-	for(vector<int>::size_type i = 0; i != bin_num.size(); i++)
-		cout<<bin_num[i];
-	cout<<endl;
-	
-	int number = getIntegerForm(bin_num);
+	cout<<"\n\n";
 
-	cout<<number;
+	// Render world
+	world->drawWorld();
 
+	cout<<"\n\nPress any key to continue.";
 	getch();
 
-	//world->drawWorld();
-	/*
+	// Initalize genetic algorithm
 	GeneticAlgorithm genetic(POPULATION_SIZE, LEVEL_NUM_ROWS, LEVEL_NUM_COLUMNS, world);
+	genetic.initAlgorithm();
+
+	cout<<"\nGenetic Algorithm initialized...";
+	cout<<"\nPress any key to generate population.";
+	getch();
 	
+	// Display initial population
 	genetic.displayPopulation();
 	getch();
 
+	// Delete world population
 	delete world;
-	/*
-	char key = '\0';
-
-	while(key != 'q')
-	{
-		world = new World();
-		world->initWorld();
-		world->drawWorld();
-		std::cout<<"\n\n\n\t[Q]uit";
-		key = getch();
-	}
-
-	delete world;
-	*/
+	
 	return 0;
 }

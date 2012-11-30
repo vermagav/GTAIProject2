@@ -16,9 +16,9 @@ using std::endl;
 void GeneticAlgorithm::generatePopulation()
 {
 	// TODO:: Generate Valid Path
-	srand((unsigned)time(0));	
+	srand((unsigned)time(0));
 
-	cout<<" INSIDE GENERATE";
+	cout<<"INSIDE GENERATE\n";
 
 	// First Create N - 2 Random Paths
 	int random_num1 = 0, random_num2 = 0;
@@ -36,19 +36,19 @@ void GeneticAlgorithm::generatePopulation()
 		// Create Vector to Hold path
 		vector<pair<int, int> > temp_path;
 
-		cout<<" PathLength ="<< temp.getPathLength()<<" Binary Length"<< temp.getbinaryLength();
+		cout<<"\nPathLength = "<< temp.getPathLength()<<" Binary Length = "<< temp.getbinaryLength();
 
 		for (int j = 0; j != temp.getPathLength(); j++)
 		{
 			cout<<j<< " ";
 
 			// Create random no for direction 00, 01, 10, 11
-			random_num1 = rand()% 4;
+			random_num1 = rand() % 4;
 
 			// Create random no for distance
-			random_num2 = rand()%((int)log2(rows));
+			random_num2 = rand() % ((int)log2(rows));
 
-			//make a pair
+			// Make a pair
 			pair<int, int> temp_pair = make_pair(random_num1, random_num2);	
 
 			// Append The pair to the path
@@ -58,19 +58,19 @@ void GeneticAlgorithm::generatePopulation()
 		// Actually set the path
 		temp.setPath(temp_path);
 		
-		cout<<"PATH SET";
+		cout<<"\nPATH SET";
 		// create the binary Representation
 		temp.encode();
 		
-		cout<<" DONE ENCODING";
+		cout<<"\nDONE ENCODING";
 
 		// Add the Randomly Generated Chromosome To the Population
 		population.push_back(temp);
 		
-		cout<<"Generated individual"<<i<<"\n";
+		cout<<"\nGenerated individual"<<i<<"\n";
 	}
 
-	//Add X - Monotone Path to Population
+	// Add X - Monotone Path to Population
 	Chromosome Xmono(rows, columns, world);
 	Xmono.setMonotone(false);
 	
@@ -84,6 +84,7 @@ void GeneticAlgorithm::generatePopulation()
 			temp_pair = make_pair(2, 1);	
 		else
 			temp_pair = make_pair(0, 1);
+		
 		// Append The pair to the path
 		X_path.push_back(temp_pair);
 	}
@@ -93,11 +94,11 @@ void GeneticAlgorithm::generatePopulation()
 	Xmono.encode();
 	population.push_back(Xmono);
 
-	//Add Y - Mootone path to Population
+	// Add Y - Mootone path to Population
 	Chromosome Ymono(rows, columns, world);
 	Ymono.setMonotone(true);
 
-	//Set the Y - Monotone Path
+	// Set the Y - Monotone Path
 	vector<pair<int, int> > Y_path;
 
 	for (int j = 0; j != Ymono.getPathLength(); j++)
@@ -122,6 +123,7 @@ void GeneticAlgorithm::repairPopulation()
 {
 	vector<Chromosome> valid, invalid;
 	
+	// Seperate Into Valid and Invalid Paths
 	for(vector<Chromosome>::iterator i = population.begin(); i != population.end(); i++)
 		if((*i).isOutOfBounds())
 		{
@@ -131,15 +133,17 @@ void GeneticAlgorithm::repairPopulation()
 		{
 			valid.push_back((*i));
 		}
-
+	
+	// Repair the Invalid Paths
 	for(vector<Chromosome>::iterator i = invalid.begin(); i != invalid.end(); i++)
 		(*i).repairOutofBounds();
 
+	// Clear the Population, Add Valid and Invalid Repaired Paths
 	population.clear();
 	copy(valid.begin(), valid.end(), back_inserter(population));
 	copy(invalid.begin(), invalid.end(), back_inserter(population));
 
-	//?? Call fitness functions
+	// Call fitness functions
 }
 
 
@@ -172,6 +176,7 @@ void GeneticAlgorithm::evaluatePopulationFitness()
 				d++;
 		}
 
+		// Caclulate and set rank using formula Rank(X) = P - D
 		population[i].setRank((populationSize - d));
 	}
 
@@ -222,7 +227,7 @@ std::vector<Chromosome> GeneticAlgorithm::rouletteSelection()
 	int count = 0;
 
 
-	while (count != (POPULATION_SIZE *CROSSOVER_RATE))
+	while (count != (POPULATION_SIZE * CROSSOVER_RATE))
 	{
 		// Generate a random number between 0 and 1 
 		r = ((double) rand() / (RAND_MAX));
@@ -310,15 +315,6 @@ std::vector<Chromosome> GeneticAlgorithm::generateOffSpring()
 
 void GeneticAlgorithm::run()
 {
-	// Generate the initial Population
-	generatePopulation();
-
-	// Try to Repair the Invalid paths
-	repairPopulation();
-
-	// Calculate the fitness of each chromosome in the population and sort
-	evaluatePopulationFitness();
-
 	//----------------------------------------------------------------------
 	// Elitist Strategy Used
 	// Should go in a loop

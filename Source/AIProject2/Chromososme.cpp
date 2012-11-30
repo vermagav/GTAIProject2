@@ -16,7 +16,8 @@ using std::endl;
 // Utility Function: get vector of binary form from the Number
 vector<int> getBinaryForm(int number, int vector_size)
 {
-	cout<<"\n Number given to func ="<<number<<"\n";
+
+	cout<<"\nNumber given to func = "<<number<<"\n";
 
 	vector<int> result;
 	int remainder = 0, count = 0;
@@ -31,7 +32,7 @@ vector<int> getBinaryForm(int number, int vector_size)
 		cout<<number;
     }
 	
-	cout<<" \ncount "<<count<<count<<"\nsize "<<vector_size;
+	cout<<"\ncount "<<count<<count<<"\nsize "<<vector_size;
 	
 	// Fill in the remaining Zeros
 	// Check -1???
@@ -172,13 +173,13 @@ void Chromosome::encode()
 
 		cout<<"PUSHED PATH CODE BUT NOT DISTANCE";
 
-		cout<<"Length of Binary path"<< binary_length;
+		cout<<"Length of Binary path"<< binaryLength;
 
-		vector<int> distance = getBinaryForm(int_dist, binary_length);
+		vector<int> distance = getBinaryForm(int_dist, binaryLength);
 
 		cout<<"done distance";
 
-		// Make Sure Length of distance vector is binary_length 
+		// Make Sure Length of distance vector is binaryLength 
 		//Append that to the end of the binary_rep
 		copy(distance.begin(), distance.end(), back_inserter(binary_rep));
 		
@@ -204,8 +205,8 @@ void Chromosome::decode()
 
 		if( ((*i) == 0) && ((*(i + 1) == 0)) )
 		{
-			//get number from the next binary_length
-			vector<int> bin_distance(i + 3, i + 3 + binary_length);			
+			//get number from the next binaryLength
+			vector<int> bin_distance(i + 3, i + 3 + binaryLength);			
 			int distance = getIntegerForm(bin_distance);
 			
 			// if Number is negative
@@ -234,7 +235,7 @@ void Chromosome::decode()
 			temp = make_pair(3, 1);
 		}
 
-		i += (3 + binary_length);
+		i += (3 + binaryLength);
 		path.push_back(temp);
 	}
 }
@@ -345,7 +346,7 @@ bool Chromosome::isOutOfBounds() const
 }
 
 
-int Chromosome::noOfObstacle() const
+int Chromosome::numOfObstacles() const
 {
 	// Make sure decode is called before calling this
 	// decode();
@@ -568,7 +569,7 @@ bool Chromosome::goesThruGoal() const
 		return true;
 }
 
-void Chromosome::function1()
+void Chromosome::fitnessFunctionLength()
 {
 	// PATH LENGTH FITNESS FUNCTION: Smaller path.. Higher fitness
 
@@ -585,7 +586,7 @@ void Chromosome::function1()
 			length += 1;
 
 	// Get the Number of Obstacles
-	obstacleCount = noOfObstacle();
+	obstacleCount = numOfObstacles();
 
 	// Assign Low Score if path has obstacles
 	if(obstacleCount == 0)
@@ -594,7 +595,7 @@ void Chromosome::function1()
 		function_value[0] = ((double)(pathLength + 1)*(pathLength + 1) - length)/obstacleCount;
 }
 
-void Chromosome::function2()
+void Chromosome::fitnessFunctionSafety()
 {
 	// Safety FITNESS Function
 	double safetyValue = 0;
@@ -915,7 +916,7 @@ void Chromosome::repairSolidObstacles()
 // DO NOT USE
 bool Chromosome::isValid() const
 {
-	return (isOutOfBounds() && (noOfObstacle() == 0) && goesThruGoal());
+	return (isOutOfBounds() && (numOfObstacles() == 0) && goesThruGoal());
 }
 
 void Chromosome::display() const
