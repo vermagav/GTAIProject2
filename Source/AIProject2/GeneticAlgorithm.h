@@ -19,8 +19,6 @@ public:
 	{
 		std::cout<<"\nGenerating Population...\n\n";
 		generatePopulation();
-		getch();
-
 		std::cout<<"\nPopulation completely generated...";
 		std::cout<<"\nPress any key to repair population.";
 		getch();

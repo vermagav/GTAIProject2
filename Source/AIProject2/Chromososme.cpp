@@ -129,6 +129,9 @@ void Chromosome::encode()
 	cout<<"monotne"<< monotone;
 	cout<<"path:"<<path.size();
 
+	int count = 0;
+	int total = path.size();
+
 	//Set the Path
 	for(vector<pair<int, int> >::const_iterator i = path.begin(); i != path.end(); i++)
 	{
@@ -156,12 +159,13 @@ void Chromosome::encode()
 			binary_rep.push_back(1);
 			binary_rep.push_back(1);
 		}
-			
+		
+		cout<<"\n***ENCODING Chromosome "<<count<<" of "<<total<<"***";
 		// Convert the distance to binary form;
 		// Binary Form hs to be Proper Length
 		int int_dist = (*i).second;
 		
-		cout<<"distance = "<<int_dist;
+		cout<<"\nDistance = "<<int_dist;
 
 		if( int_dist < 0)
 		{
@@ -171,19 +175,21 @@ void Chromosome::encode()
 		else
 			binary_rep.push_back(0);
 
-		cout<<"PUSHED PATH CODE BUT NOT DISTANCE";
+		cout<<"\nPUSHED PATH CODE BUT NOT DISTANCE";
 
-		cout<<"Length of Binary path"<< binaryLength;
+		cout<<"\nLength of Binary path = "<< binaryLength;
 
 		vector<int> distance = getBinaryForm(int_dist, binaryLength);
 
-		cout<<"done distance";
+		cout<<"\nComputing distance... done!";
 
 		// Make Sure Length of distance vector is binaryLength 
 		//Append that to the end of the binary_rep
 		copy(distance.begin(), distance.end(), back_inserter(binary_rep));
 		
-		cout<<"1 path-code done";
+		cout<<"\nComputing path-code... done!";
+
+		count++;
 	}
 }
 
